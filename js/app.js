@@ -9,6 +9,12 @@
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
+const cards= document.querySelectorAll('.deck .card'); //output a NodeList
+const cardsArr= [...cards]; //convert the NodeList to Array
+const deck= document.querySelector('.deck');
+const fragment= document.createDocumentFragment();
+const restart= document.querySelector('.restart');
+let shuffledCards= [];
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -25,7 +31,16 @@ function shuffle(array) {
     return array;
 }
 
+function shuffleDeck () {
+  shuffledCards= shuffle(cardsArr);
+  for (let i =0; i<shuffledCards.length; i++) {
+    fragment.appendChild(shuffledCards[i]);
+  }
+  deck.appendChild(fragment);
+}
 
+restart.addEventListener('click',shuffleDeck);
+shuffleDeck();
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
