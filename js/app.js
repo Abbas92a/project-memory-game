@@ -39,8 +39,15 @@ function shuffleDeck () {
   deck.appendChild(fragment);
 }
 
+function flipping (evt) {
+  evt.target.classList.remove('close');
+  evt.target.classList.add('open');
+}
+
 restart.addEventListener('click',shuffleDeck);
 shuffleDeck();
+deck.addEventListener('click', flipping);
+
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
