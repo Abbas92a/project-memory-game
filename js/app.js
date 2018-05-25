@@ -20,6 +20,7 @@ let count= 0;
 let targetEvent;
 let firstCard;
 let secondCard;
+let moves= 0;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -49,6 +50,9 @@ function flipping (evt) {
   //avoid opening more than 2 cards at the same time & make sure target is card that wasn't matched
   if (openCardsList.length <2 && !(targetEvent.classList.contains('match')) &&targetEvent.nodeName ==='LI' ) {
     let symbol= targetEvent.firstElementChild.classList[1]; //get the seconed class name
+    moves++; //count number of moves
+    starRating();
+    movesCounter();
     targetEvent.classList.add('open');
     if (openCardsList.length ===0) { //targeting the first card
       firstCard= targetEvent;
@@ -87,10 +91,36 @@ function unmatching () {
   }, 750);
 }
 
+function starRating () {
+  let stars= document.querySelectorAll('.stars i');
+  if (moves/2 === 6) {
+    stars[2].classList.add('fa-star-o');
+    stars[2].classList.remove('fa-star');
+  } else if (moves/2 === 12) {
+      stars[1].classList.add('fa-star-o');
+      stars[1].classList.remove('fa-star');
+  } else if (moves/2 === 18) {
+      stars[0].classList.add('fa-star-o');
+      stars[0].classList.remove('fa-star');
+  }
+}
+
+function movesCounter () {
+  let movesCount= document.querySelector('.score-panel .moves');
+  let movesNum= moves/2;
+  movesCount.innerHTML= Math.floor(movesNum);
+}
+
 restart.addEventListener('click',shuffleDeck);
 // shuffleDeck();
 deck.addEventListener('click', flipping);
+if (count===8) {
 
+}
+
+if (moves>0) {
+  starRating();
+}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
