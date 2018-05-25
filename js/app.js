@@ -15,6 +15,11 @@ const deck= document.querySelector('.deck');
 const fragment= document.createDocumentFragment();
 const restart= document.querySelector('.restart');
 let shuffledCards= [];
+let openCardsList= [];
+let count= 0;
+let targetEvent;
+let firstCard;
+let secondCard;
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -40,12 +45,50 @@ function shuffleDeck () {
 }
 
 function flipping (evt) {
-  evt.target.classList.remove('close');
-  evt.target.classList.add('open');
+  targetEvent= evt.target;
+  //avoid opening more that 2 cards at the same time and make sure the target is card
+  if (openCardsList.length <2 && targetEvent.nodeName ==='LI') {
+    let symbol= targetEvent.firstElementChild.classList[1]; //get the seconed class name
+    targetEvent.classList.add('open');
+    if (openCardsList.length ===0) { //targeting the first card
+      firstCard= targetEvent;
+    }
+    secondCard= targetEvent;
+    openCardsList.push(symbol); //store card symbol in array up to cards
+    if (openCardsList.length ===2) {
+      if (openCardsList[0] === openCardsList[1]) {
+        matching();
+      } else {
+        unmatching();
+      }
+    }
+  }
+}
+
+function matching () {
+  firstCard.classList.add('match'); //first target
+  firstCard.classList.remove('open');
+  secondCard.classList.add('match'); //second target
+  secondCard.classList.remove('open');
+  count++; //count the matched cards
+  openCardsList.splice(0,2); //reset the list
+}
+
+function unmatching () {
+  firstCard.classList.add('unmatch');
+  firstCard.classList.remove('open');
+  secondCard.classList.add('unmatch');
+  secondCard.classList.remove('open');
+
+  setTimeout(function () {
+    firstCard.classList.remove('unmatch');
+    secondCard.classList.remove('unmatch');
+    openCardsList.splice(0,2); //reset the list
+  }, 750);
 }
 
 restart.addEventListener('click',shuffleDeck);
-shuffleDeck();
+// shuffleDeck();
 deck.addEventListener('click', flipping);
 
 /*
