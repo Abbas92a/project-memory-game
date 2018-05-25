@@ -46,8 +46,8 @@ function shuffleDeck () {
 
 function flipping (evt) {
   targetEvent= evt.target;
-  //avoid opening more that 2 cards at the same time and make sure the target is card
-  if (openCardsList.length <2 && targetEvent.nodeName ==='LI') {
+  //avoid opening more than 2 cards at the same time & make sure target is card that wasn't matched
+  if (openCardsList.length <2 && !(targetEvent.classList.contains('match')) &&targetEvent.nodeName ==='LI' ) {
     let symbol= targetEvent.firstElementChild.classList[1]; //get the seconed class name
     targetEvent.classList.add('open');
     if (openCardsList.length ===0) { //targeting the first card
