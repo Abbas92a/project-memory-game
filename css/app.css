@@ -210,3 +210,7 @@ h1 {
     float: right;
     cursor: pointer;
 }
+
+#time {
+  min-width: 70px;
+}
