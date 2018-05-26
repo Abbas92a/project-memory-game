@@ -19,9 +19,10 @@ let shuffledCards= [];
 let openCardsList= [];
 let count= 0;
 let targetEvent;
-let firstCard;
-let secondCard;
+let firstCard=0;
+let secondCar=0;
 let moves= 0;
+let startTime= Date.now();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -49,7 +50,7 @@ function shuffleDeck () {
 function flipping (evt) {
   targetEvent= evt.target;
   //avoid opening more than 2 cards at the same time & make sure target is card that wasn't matched
-  if (openCardsList.length <2 && !(targetEvent.classList.contains('match')) &&targetEvent.nodeName ==='LI' ) {
+  if (openCardsList.length <2 && !(targetEvent.classList.contains('match')) &&targetEvent.nodeName ==='LI' && targetEvent !== firstCard ) {
     let symbol= targetEvent.firstElementChild.classList[1]; //get the seconed class name
     moves++; //count number of moves
     starRating();
@@ -62,10 +63,15 @@ function flipping (evt) {
     openCardsList.push(symbol); //store card symbol in array up to cards
     if (openCardsList.length ===2) {
       if (openCardsList[0] === openCardsList[1]) {
+        count++; //count the matched cards
         matching();
       } else {
         unmatching();
       }
+    }
+
+    if (count === 8) {
+      winningDisplay();
     }
   }
 }
@@ -75,7 +81,6 @@ function matching () {
   firstCard.classList.remove('open');
   secondCard.classList.add('match'); //second target
   secondCard.classList.remove('open');
-  count++; //count the matched cards
   openCardsList.splice(0,2); //reset the list
 }
 
@@ -86,33 +91,30 @@ function unmatching () {
   secondCard.classList.remove('open');
 
   setTimeout(function () {
-    firstCard.classList.remove('unmatch');
+    firstCard.classList.remove('unmatch'); //delay for unmatching animation
     secondCard.classList.remove('unmatch');
     openCardsList.splice(0,2); //reset the list
   }, 750);
 }
 
 function starRating () {
-  let stars= document.querySelectorAll('.stars i');
+  const stars= document.querySelectorAll('.stars i');
   if (moves/2 === 6) {
-    stars[2].classList.add('fa-star-o');
-    stars[2].classList.remove('fa-star');
+    stars[2].classList.add('fa-star-o'); //shallow star
+    stars[2].classList.remove('fa-star'); //solid star
   } else if (moves/2 === 12) {
       stars[1].classList.add('fa-star-o');
       stars[1].classList.remove('fa-star');
-  } else if (moves/2 === 18) {
-      stars[0].classList.add('fa-star-o');
-      stars[0].classList.remove('fa-star');
   }
 }
 
 function movesCounter () {
-  let movesCount= document.querySelector('.score-panel .moves');
+  const movesCount= document.querySelector('.score-panel .moves');
   let movesNum= moves/2;
   movesCount.innerHTML= Math.floor(movesNum) + " Moves";
 }
 
-function timer () {
+function timer () { //show time elapsed
   let now= Date.now();
   let milliSecond= now - startTime;
   let hours= Math.floor(milliSecond / (1000 * 60 * 60));
@@ -123,13 +125,13 @@ function timer () {
 }
 
 function winningDisplay () {
-  let winningPage= document.querySelector('.winning-page');
-  let container= document.querySelector('.container');
-  let movesDisplay= document.querySelector('.alignment-container p');
-  let timeElapsed= document.querySelector('#time-Elapsed');
-  let time= document.querySelector('#time');
-  let starsNum= document.querySelectorAll('#star-Rating li');
-  let stars= document.querySelector('ul.stars');
+  const winningPage= document.querySelector('.winning-page');
+  const container= document.querySelector('.container');
+  const movesDisplay= document.querySelector('.alignment-container p');
+  const timeElapsed= document.querySelector('#time-Elapsed');
+  const time= document.querySelector('#time');
+  const starsNum= document.querySelectorAll('#star-Rating li');
+  const stars= document.querySelector('ul.stars');
   winningPage.classList.remove('hide');
   container.classList.add('hideTotally');
   movesDisplay.innerHTML= 'With '+ Math.floor(moves/2) + ' Move';
@@ -140,9 +142,6 @@ function winningDisplay () {
   }
   if (moves/2 >= 12) {
       starsNum[1].classList.add('hide');
-  }
-  if (moves/2 >= 18) {
-      starsNum[0].classList.add('hide');
   }
 
   function playAgain() {
@@ -156,7 +155,7 @@ function winningDisplay () {
 }
 
 function restarting () {
-  let stars= document.querySelectorAll('.stars i');
+  const stars= document.querySelectorAll('.stars i');
   openCardsList.splice(0,2);
   count= 0;
   moves= 0;
@@ -173,16 +172,13 @@ function restarting () {
   }
 
   shuffleDeck();
-
 }
 
-let startTime= Date.now();
-
-restart.addEventListener('click',restarting);
-// restart.addEventListener('click',winningDisplay);
-shuffleDeck();
-deck.addEventListener('click', flipping);
 setInterval(timer, 1000); //showing timer that count time every 1 second
+
+shuffleDeck();
+restart.addEventListener('click',restarting);
+deck.addEventListener('click', flipping);
 
 
 /*
