@@ -108,7 +108,7 @@ function starRating () {
 function movesCounter () {
   let movesCount= document.querySelector('.score-panel .moves');
   let movesNum= moves/2;
-  movesCount.innerHTML= Math.floor(movesNum);
+  movesCount.innerHTML= Math.floor(movesNum) + " Moves";
 }
 
 function timer () {
