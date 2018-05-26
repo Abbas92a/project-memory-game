@@ -14,6 +14,7 @@ const cardsArr= [...cards]; //convert the NodeList to Array
 const deck= document.querySelector('.deck');
 const fragment= document.createDocumentFragment();
 const restart= document.querySelector('.restart');
+const button= document.querySelector('button');
 let shuffledCards= [];
 let openCardsList= [];
 let count= 0;
@@ -121,12 +122,68 @@ function timer () {
   time.innerHTML= hours.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) +':'+ minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) +':'+ seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
 }
 
+function winningDisplay () {
+  let winningPage= document.querySelector('.winning-page');
+  let container= document.querySelector('.container');
+  let movesDisplay= document.querySelector('.alignment-container p');
+  let timeElapsed= document.querySelector('#time-Elapsed');
+  let time= document.querySelector('#time');
+  let starsNum= document.querySelectorAll('#star-Rating li');
+  let stars= document.querySelector('ul.stars');
+  winningPage.classList.remove('hide');
+  container.classList.add('hideTotally');
+  movesDisplay.innerHTML= 'With '+ Math.floor(moves/2) + ' Move';
+  timeElapsed.innerHTML= time.innerHTML;
+
+  if (moves/2 >= 6) {
+    starsNum[2].classList.add('hide');
+  }
+  if (moves/2 >= 12) {
+      starsNum[1].classList.add('hide');
+  }
+  if (moves/2 >= 18) {
+      starsNum[0].classList.add('hide');
+  }
+
+  function playAgain() {
+    restarting();
+    winningPage.classList.add('hide');
+    container.classList.remove('hideTotally');
+    console.log('I am here');
+  }
+
+  button.addEventListener('click',playAgain);
+}
+
+function restarting () {
+  let stars= document.querySelectorAll('.stars i');
+  openCardsList.splice(0,2);
+  count= 0;
+  moves= 0;
+  startTime= Date.now();
+  movesCounter();
+
+  for(let i=0; i<16; i++) {
+    cards[i].classList.remove('match');
+  }
+
+  for(let i=0; i<3; i++) {
+    stars[i].classList.remove('fa-star-o');
+    stars[i].classList.add('fa-star');
+  }
+
+  shuffleDeck();
+
+}
+
 let startTime= Date.now();
 
-restart.addEventListener('click',shuffleDeck);
-// shuffleDeck();
+restart.addEventListener('click',restarting);
+// restart.addEventListener('click',winningDisplay);
+shuffleDeck();
 deck.addEventListener('click', flipping);
-setInterval(timer, 1000);
+setInterval(timer, 1000); //showing timer that count time every 1 second
+
 
 /*
  * set up the event listener for a card. If a card is clicked:

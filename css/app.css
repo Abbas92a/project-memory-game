@@ -214,3 +214,67 @@ h1 {
 #time {
   min-width: 70px;
 }
+
+.winning-page {
+  width: 100vw;
+  height: 100vh;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+  z-index: 100;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+.alignment-container {
+  text-align: center;
+}
+
+#star-Rating li {
+  list-style: none;
+  display: inline-block;
+  font-size: 40px;
+  color: gold;
+  padding-right: 10px;
+}
+
+#star-Rating li:last-child {
+  padding-right: 0px;
+}
+
+#star-Rating {
+  padding-left: 0;
+}
+
+.alignment-container p, #time-Elapsed {
+  font-size: 1.5em;
+}
+
+#star-Rating li.hide {
+  display: none;
+}
+
+.hide {
+  /* display: none; */
+  z-index: -1;
+  opacity: 0;
+}
+
+.hideTotally {
+  display: none;
+}
+
+button {
+  background-color: #02b3e4;
+  min-width: 45px;
+  min-height: 45px;
+  border-radius: 10px;
+  font-size: 1.2em;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  box-shadow: 5px 5px 5px #bbb;
+}
