@@ -111,16 +111,23 @@ function movesCounter () {
   movesCount.innerHTML= Math.floor(movesNum);
 }
 
+function timer () {
+  let now= Date.now();
+  let milliSecond= now - startTime;
+  let hours= Math.floor(milliSecond / (1000 * 60 * 60));
+  let minutes=  Math.floor(milliSecond % (1000 * 60 * 60) / (1000 * 60));
+  let seconds= Math.floor(milliSecond % (1000 * 60) / (1000));
+  let time= document.querySelector('#time');
+  time.innerHTML= hours.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) +':'+ minutes.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false}) +':'+ seconds.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false});
+}
+
+let startTime= Date.now();
+
 restart.addEventListener('click',shuffleDeck);
 // shuffleDeck();
 deck.addEventListener('click', flipping);
-if (count===8) {
+setInterval(timer, 1000);
 
-}
-
-if (moves>0) {
-  starRating();
-}
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
