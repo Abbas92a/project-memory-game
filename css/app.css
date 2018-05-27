@@ -30,8 +30,9 @@ body {
 }
 
 h1 {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Luckiest Guy', cursive;
     font-weight: 300;
+    font-size: 2.5em;
 }
 
 /*
@@ -166,6 +167,7 @@ h1 {
     justify-content: space-between;
     width: 345px;
     margin-bottom: 10px;
+    font-size: 1.2em;
 }
 
 .score-panel .stars {
@@ -266,10 +268,22 @@ button {
     max-width: 125px;
     max-height: 125px;
   }
+
+  .score-panel {
+    font-size: 1.1em;
+  }
 }
 
 @media screen and (max-width: 390px) {
   .score-panel {
     width: 80vw;
+  }
+
+  h1 {
+    font-size: 2em;
+  }
+
+  .score-panel {
+    font-size: 1em;
   }
 }
