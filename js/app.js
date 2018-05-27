@@ -1,17 +1,18 @@
 const cards= document.querySelectorAll('.deck .card'); //output a NodeList
-const cardsArr= [...cards]; //convert the NodeList to Array
-const deck= document.querySelector('.deck');
-const fragment= document.createDocumentFragment();
-const restart= document.querySelector('.restart');
-const button= document.querySelector('button');
-let shuffledCards= [];
-let openCardsList= [];
-let count= 0;
-let targetEvent;
-let firstCard=0;
-let secondCar=0;
-let moves= 0;
-let startTime= Date.now();
+      cardsArr= [...cards], //convert the NodeList to Array
+      deck= document.querySelector('.deck'),
+      fragment= document.createDocumentFragment(),
+      restart= document.querySelector('.restart'),
+      button= document.querySelector('button');
+
+let shuffledCards= [],
+    openCardsList= [],
+    count= 0,
+    targetEvent,
+    firstCard=0,
+    secondCard=0,
+    moves= 0,
+    startTime= Date.now();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -153,6 +154,7 @@ function restarting () {
 
   for(let i=0; i<16; i++) {
     cards[i].classList.remove('match');
+    cards[i].classList.remove('open');
   }
 
   for(let i=0; i<3; i++) {
