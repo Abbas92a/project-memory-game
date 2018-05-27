@@ -6,12 +6,12 @@ const cards= document.querySelectorAll('.deck .card'); //output a NodeList
       button= document.querySelector('button');
 
 let shuffledCards= [],
-    openCardsList= [],
-    count= 0,
+    openCardsList= [], //store symbols of open cards
+    count= 0, //number of matched cards
     targetEvent,
-    firstCard=0,
-    secondCard=0,
-    moves= 0,
+    firstCard=0, //first open card
+    secondCard=0, //second open card
+    moves= 0, //number of every opened card throughout the game
     startTime= Date.now();
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -32,7 +32,7 @@ function shuffle(array) {
 function shuffleDeck () {
   shuffledCards= shuffle(cardsArr);
   for (let i =0; i<shuffledCards.length; i++) {
-    fragment.appendChild(shuffledCards[i]);
+    fragment.appendChild(shuffledCards[i]); //to minimize Reflow and Repaint
   }
   deck.appendChild(fragment);
 }
@@ -80,8 +80,8 @@ function unmatching () {
   secondCard.classList.add('unmatch');
   secondCard.classList.remove('open');
 
-  setTimeout(function () {
-    firstCard.classList.remove('unmatch'); //delay for unmatching animation
+  setTimeout(function () { //delay for "unmatching" animation
+    firstCard.classList.remove('unmatch');
     secondCard.classList.remove('unmatch');
     openCardsList.splice(0,2); //reset the list
   }, 750);
@@ -101,7 +101,7 @@ function starRating () {
 function movesCounter () {
   const movesCount= document.querySelector('.score-panel .moves');
   let movesNum= moves/2;
-  movesCount.innerHTML= Math.floor(movesNum) + " Moves";
+  movesCount.innerHTML= Math.floor(movesNum) + " Moves"; //Math.floor is to round down the number
 }
 
 function timer () { //show time elapsed
@@ -122,10 +122,10 @@ function winningDisplay () {
   const time= document.querySelector('#time');
   const starsNum= document.querySelectorAll('#star-Rating li');
   const stars= document.querySelector('ul.stars');
-  winningPage.classList.remove('hide');
-  container.classList.add('hideTotally');
-  movesDisplay.innerHTML= 'With '+ Math.floor(moves/2) + ' Move';
-  timeElapsed.innerHTML= time.innerHTML;
+  winningPage.classList.remove('hide'); //show winningPage
+  container.classList.add('hideTotally'); //hide deck, cards and the whole main page
+  movesDisplay.innerHTML= 'With '+ Math.floor(moves/2) + ' Move'; //total played moves
+  timeElapsed.innerHTML= time.innerHTML; //total time elapsed since start of playing
 
   if (moves/2 >= 6) {
     starsNum[2].classList.add('hide');
@@ -138,7 +138,6 @@ function winningDisplay () {
     restarting();
     winningPage.classList.add('hide');
     container.classList.remove('hideTotally');
-    console.log('I am here');
   }
 
   button.addEventListener('click',playAgain);
